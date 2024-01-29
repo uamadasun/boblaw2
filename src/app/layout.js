@@ -1,45 +1,37 @@
-import {
-  Inter,
-  Dancing_Script,
-  Playfair_Display,
-  Lato,
-} from "next/font/google";
+import { Inter, Roboto, Montserrat } from "next/font/google";
 import "./globals.css";
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const dancing_script = Dancing_Script({
+const roboto = Roboto({
   subsets: ["latin"],
-  variable: "--font-dancing-script",
+  variable: "--font-roboto",
   weight: ["400", "700"],
   display: "swap",
 });
 
-const playfair_display = Playfair_Display({
+const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-playfair-display",
-  weight: ["400", "700"],
-  display: "swap",
-});
-
-const lato = Lato({
-  subsets: ["latin"],
-  variable: "--font-lato",
+  variable: "--font-Montserrat",
   weight: ["400", "700"],
   display: "swap",
 });
 
 export const metadata = {
-  title: "Glam by Nadege",
+  title: "BOB Law",
   description:
-    "Discover the ultimate haircare experience at Glam by Nadege in Everett, Washington. Our expert stylists specialize in afro natural hair care, braids, weaves, and all the stunning hairstyles that celebrate the beauty of black women. Join us for a journey of empowerment, self-expression, and the highest level of professionalism. Book your appointment today and let us transform your hair into a work of art.",
+    "Bob Law Firm - Experienced personal injury attorneys in Atlanta, Georgia. We offer free case evaluations and no fees unless we recover money for you. Get expert legal representation for your personal injury claim today.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en"
-    className={`${dancing_script.variable} ${lato.variable} ${playfair_display.variable}`}>
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={`${montserrat.variable} ${roboto.variable}`}>
+      <body className={inter.className}><NavBar />
+        {children}
+        <div className="h-10 mb-2"></div>
+        <Footer /></body>
     </html>
   );
 }
