@@ -7,7 +7,7 @@ import { useLoadScript } from "@react-google-maps/api";
 
 export default function Home() {
   const reqUrl = `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/wp/v2/posts`;
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   console.log("URL:", reqUrl);
 
@@ -17,7 +17,7 @@ export default function Home() {
     try {
       const response = await fetch(reqUrl);
       const responseData = await response.json();
-      setPosts(responseData);
+      await setPosts(responseData);
       console.log("posts: ", posts);
       setLoading(false);
     } catch (error) {
