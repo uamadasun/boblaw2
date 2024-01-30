@@ -1,42 +1,45 @@
 "use client";
-import Image from "next/image";
-import Footer from "./components/Footer";
-import NavBar from "./components/NavBar";
-import { useEffect, useState } from "react";
-import { useLoadScript } from "@react-google-maps/api";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-export default function Home() {
-  const reqUrl = `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/wp/v2/posts`;
+const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log("URL:", reqUrl);
+  const reqUrl = `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/wp/v2/posts`;
 
   const fetchPosts = async () => {
     setLoading(true);
-    console.log("hello");
+
     try {
-      const response = await fetch(reqUrl);
-      const responseData = await response.json();
-      await setPosts(responseData);
-      console.log("posts: ", posts);
-      setLoading(false);
+      const res = await axios.get(reqUrl);
+      console.log("results from call", res.data); // Access the response data
+      setPosts(res.data); // Update the posts state with fetched data
     } catch (error) {
-      console.error(Error);
+      console.log("this is the error message", error);
     }
+
+    setLoading(false);
   };
 
-  useEffect(  () => {
-     fetchPosts()
-     console.log("in use effect")
+  useEffect(() => {
+    fetchPosts();
+    console.log("I am in useEffect");
   }, []);
-  console.log("posts:", posts);
+  console.log("finally i have posts: ", posts)
 
-  if (loading) {
-    return(
-      <p>Loading...</p>
-    )
-  }
-  return <main>
-    <p>{JSON.stringify(posts)}</p>
-  </main>;
-}
+  return (
+    <div>
+      {loading ? (
+        "Loading..."
+      ) : (
+        posts.map((post) => (
+          <p key={post.id} className="text-red font-black text-lg">
+            {post.title.rendered}
+          </p>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default Home;
