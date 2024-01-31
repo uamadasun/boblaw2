@@ -33,7 +33,7 @@ async function getPosts() {
   console.log("result data: ", data);
   return data;
 }
-
+console.log("api url: ", process.env.WORDPRESS_API_URL)
 export default async function Home() {
     const fetchedPosts = await getPosts();
     
